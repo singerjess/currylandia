@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+   http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <changeSet id="add_foreign_key_constraint_schedule_restaurant" author="jessiii">
+        <addForeignKeyConstraint baseColumnNames="restaurant_id"
+                                 baseTableName="restaurants"
+                                 constraintName="fk_schedule_restaurant"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="schedules"/>
+    </changeSet>
+
+    <changeSet id="restaurant_unique_constraint" author="jess">
+        <addUniqueConstraint
+                columnNames="restaurant_id,location"
+                constraintName="unique_restaurant"
+                tableName="restaurants"/>
+    </changeSet>
+
+    <changeSet id="schedule_unique_constraint" author="jess">
+        <addUniqueConstraint
+                columnNames="name,hour_close,hour_open,day_of_week"
+                constraintName="unique_restaurant"
+                tableName="schedules"/>
+    </changeSet>
+
+    <changeSet author="jessi" id="create_schedules_table">
+        <createTable tableName="schedules">
+            <column name="id" type="serial">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="hour_open" type="TIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hour_close" type="TIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="restaurant_id" type="serial">
+                <constraints nullable="false"/>
+            </column>
+            <column name="day_of_week" type="SMALLINT">
+                <constraints nullable="false" checkConstraint="CHECK (day_of_week &gt;= 1 &lt; 7)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="jessi" id="create_restaurants_table">
+        <createTable tableName="restaurants">
+            <column name="id" type="serial">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR2(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR2(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
