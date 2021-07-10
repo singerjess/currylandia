@@ -19,13 +19,13 @@ public class RestaurantController {
     }
 
     @GetMapping("/restaurantes")
-    public List<Restaurant> getAll() {
-        return restaurantRepository.getAll();
+    public List<Restaurant> findAll() {
+        return restaurantRepository.findAll();
     }
 
 
     @PostMapping("/add")
     public Restaurant add(@RequestBody Restaurant restaurant) {
-        return restaurantRepository.add(restaurant);
+        return restaurantRepository.save(restaurant);
     }
 }

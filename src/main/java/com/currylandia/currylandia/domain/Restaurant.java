@@ -1,18 +1,30 @@
 package com.currylandia.currylandia.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
+@Entity
 public class Restaurant {
-    private final String name;
-    private final String description;
-    private final String address;
-    private final List<String> schedule;
+    @Id
+    @Column(name = "id", nullable = false)
+    private Long id;
 
-    public Restaurant(String name, String description, String address, List<String> schedule) {
+    @NotNull
+    @Column
+    private final String name;
+    @NotNull
+    @Column
+    private final String description;
+    @NotNull
+    @Column
+    private final String address;
+
+    public Restaurant(String name, String description, String address) {
         this.name = name;
         this.description = description;
         this.address = address;
-        this.schedule = schedule;
     }
+//TODO: asdd schedule
 }

@@ -10,30 +10,6 @@
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
 
-    <changeSet id="add_foreign_key_constraint_schedule_restaurant" author="jessiii">
-        <addForeignKeyConstraint baseColumnNames="restaurant_id"
-                                 baseTableName="restaurants"
-                                 constraintName="fk_schedule_restaurant"
-                                 onDelete="CASCADE"
-                                 onUpdate="RESTRICT"
-                                 referencedColumnNames="id"
-                                 referencedTableName="schedules"/>
-    </changeSet>
-
-    <changeSet id="restaurant_unique_constraint" author="jess">
-        <addUniqueConstraint
-                columnNames="restaurant_id,location"
-                constraintName="unique_restaurant"
-                tableName="restaurants"/>
-    </changeSet>
-
-    <changeSet id="schedule_unique_constraint" author="jess">
-        <addUniqueConstraint
-                columnNames="name,hour_close,hour_open,day_of_week"
-                constraintName="unique_restaurant"
-                tableName="schedules"/>
-    </changeSet>
-
     <changeSet author="jessi" id="create_schedules_table">
         <createTable tableName="schedules">
             <column name="id" type="serial">
@@ -69,6 +45,32 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+    </changeSet>
+
+
+
+    <changeSet id="add_foreign_key_constraint_schedule_restaurant" author="jessiii">
+        <addForeignKeyConstraint baseColumnNames="restaurant_id"
+                                 baseTableName="schedules"
+                                 constraintName="fk_schedule_restaurant"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="restaurants"/>
+    </changeSet>
+
+    <changeSet id="restaurant_unique_constraint" author="jess">
+        <addUniqueConstraint
+                columnNames="id,address"
+                constraintName="unique_restaurant"
+                tableName="restaurants"/>
+    </changeSet>
+
+    <changeSet id="schedule_unique_constraint" author="jess">
+        <addUniqueConstraint
+                columnNames="restaurant_id,hour_close,hour_open,day_of_week"
+                constraintName="unique_schedule"
+                tableName="schedules"/>
     </changeSet>
 
 </databaseChangeLog>
