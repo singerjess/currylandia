@@ -12,8 +12,16 @@ repositories {
 	mavenCentral()
 }
 
-ext {
-	set('testcontainersVersion', "1.15.3")
+sourceSets {
+	integrationTest {
+		compileClasspath += sourceSets.main.output
+		runtimeClasspath += sourceSets.main.output
+	}
+}
+
+configurations {
+	integrationTestImplementation.extendsFrom testImplementation
+	integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
 }
 
 dependencies {
@@ -23,19 +31,35 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.liquibase:liquibase-core'
-	runtimeOnly 'org.postgresql:postgresql'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.postgresql:postgresql'
+
 	testImplementation 'org.springframework.security:spring-security-test'
-	testImplementation 'org.testcontainers:junit-jupiter'
-	testImplementation 'org.testcontainers:postgresql'
+	testImplementation "org.springframework.boot:spring-boot-starter-test"
+
+	integrationTestImplementation 'io.rest-assured:rest-assured:4.2.0'
+	integrationTestImplementation 'io.rest-assured:rest-assured-all:4.2.0'
+	def testContainersVersion = '1.15.3'
+	integrationTestImplementation "org.testcontainers:testcontainers:$testContainersVersion"
+	integrationTestImplementation "org.testcontainers:junit-jupiter:$testContainersVersion"
+	integrationTestImplementation "org.testcontainers:postgresql:$testContainersVersion"
 }
 
-dependencyManagement {
-	imports {
-		mavenBom "org.testcontainers:testcontainers-bom:${testcontainersVersion}"
-	}
+task integrationTest(type: Test) {
+	description = 'Runs integration tests.'
+	group = 'verification'
+
+	testClassesDirs = sourceSets.integrationTest.output.classesDirs
+	classpath = sourceSets.integrationTest.runtimeClasspath
+	shouldRunAfter test
 }
+
+check.dependsOn integrationTest
+
 
 test {
+	useJUnitPlatform()
+}
+
+integrationTest {
 	useJUnitPlatform()
 }

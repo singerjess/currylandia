@@ -1,7 +1,7 @@
 package com.currylandia.currylandia.controller;
 
 import com.currylandia.currylandia.domain.Restaurant;
-import com.currylandia.currylandia.repository.RestaurantRepository;
+import com.currylandia.currylandia.service.RestaurantService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,28 +13,28 @@ import static org.mockito.Mockito.*;
 class RestaurantControllerTest {
 
     RestaurantController restaurantController;
-    RestaurantRepository restaurantRepository;
+    RestaurantService restaurantService;
     Restaurant restaurant1;
 
     @BeforeEach
     public void setUp() {
         restaurant1 = new Restaurant("pepe", "comida portenia", "chacarita 1234");
-        restaurantRepository = mock(RestaurantRepository.class);
-        restaurantController = new RestaurantController(restaurantRepository);
+        restaurantService = mock(RestaurantService.class);
+        restaurantController = new RestaurantController(restaurantService);
     }
 
     @Test
     public void listAllRestaurantsShouldRetrieveAllRestaurants() {
         List<Restaurant> expectedRestaurants = List.of(restaurant1);
-        when(restaurantRepository.findAll()).thenReturn(expectedRestaurants);
+        when(restaurantService.findAll()).thenReturn(expectedRestaurants);
 
         assertEquals(expectedRestaurants, restaurantController.findAll());
     }
 
     @Test
-    public void addingARestaurantShouldAddItToTheRepository() {
+    public void addingARestaurantShouldAddItToTheService() {
         restaurantController.add(restaurant1);
 
-        verify(restaurantRepository).save(eq(restaurant1));
+        verify(restaurantService).save(eq(restaurant1));
     }
 }

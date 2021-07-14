@@ -1,7 +1,7 @@
 package com.currylandia.currylandia.controller;
 
 import com.currylandia.currylandia.domain.Restaurant;
-import com.currylandia.currylandia.repository.RestaurantRepository;
+import com.currylandia.currylandia.service.RestaurantService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,20 +12,20 @@ import java.util.List;
 @RestController
 public class RestaurantController {
 
-    private RestaurantRepository restaurantRepository;
+    private RestaurantService restaurantService;
 
-    public RestaurantController(RestaurantRepository restaurantRepository) {
-        this.restaurantRepository = restaurantRepository;
+    public RestaurantController(RestaurantService restaurantService) {
+        this.restaurantService = restaurantService;
     }
 
     @GetMapping("/restaurantes")
     public List<Restaurant> findAll() {
-        return restaurantRepository.findAll();
+        return restaurantService.findAll();
     }
 
 
-    @PostMapping("/add")
+    @PostMapping("/agregar")
     public Restaurant add(@RequestBody Restaurant restaurant) {
-        return restaurantRepository.save(restaurant);
+        return restaurantService.save(restaurant);
     }
 }
