@@ -23,13 +23,13 @@ public class RestaurantController {
         this.restaurantService = restaurantService;
     }
 
-    @GetMapping("/restaurantes")
+    @GetMapping("/restaurants")
     public List<RestaurantDTO> findAll() {
         return restaurantService.findAll().stream().map(restaurant -> restaurantMapper.mapToDTO(restaurant)).collect(Collectors.toList());
     }
 
 
-    @PostMapping("/agregar")
+    @PostMapping("/add")
     public RestaurantDTO add(@RequestBody RestaurantDTO restaurant) {
         return restaurantMapper.mapToDTO(restaurantService.save(restaurantMapper.mapToDomain(restaurant)));
     }

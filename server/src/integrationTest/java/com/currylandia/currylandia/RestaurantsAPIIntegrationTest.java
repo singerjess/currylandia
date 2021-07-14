@@ -31,10 +31,10 @@ public class RestaurantsAPIIntegrationTest extends IntegrationTest {
                 body(restaurant).
                 contentType(ContentType.JSON).
                 when().
-                post("/agregar"), address, description, name);
+                post("/add"), address, description, name);
 
         when().
-                get("/restaurantes").
+                get("/restaurants").
                 then()
                 .statusCode(200)
                 .body("address", contains(address))
