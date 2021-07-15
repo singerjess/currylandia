@@ -8,7 +8,6 @@ function Restaurants() {
     const restaurantApiClient = new RestaurantApiClient("http://localhost:8080/");
     const [isLoading, setIsLoading] = useState(true);
     const [getRestos, setRestos] = useState([]);
-    let fetchRestaurants;
 
     const history = useHistory();
     const handleOnClick = (resto) => {

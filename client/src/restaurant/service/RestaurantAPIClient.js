@@ -8,18 +8,31 @@ export class RestaurantApiClient {
     }
 
     mapRestaurantResponse(restaurant) {
-        restaurant.name = restaurant.name;
-        restaurant.description = restaurant.description;
-        restaurant.address = restaurant.address;
+        restaurant["name"] = restaurant.name;
+        restaurant["description"] = restaurant.description;
+        restaurant["address"] = restaurant.address;
         return restaurant;
     }
 
     async getAll() {
         return this.httpClient.get('/restaurants', {})
-            .then(response => response.data.items)
+            .then(response => response.data)
             .then(restaurantItems => {
                 return restaurantItems.map(this.mapRestaurantResponse)
             });
     }
+
+    async createRestaurant(restaurant) {
+        return this.httpClient.post('/add',
+            {
+                name: restaurant.name,
+                description: restaurant.description,
+                address: restaurant.address
+            }).then(response => response.data)
+            .then(item => {
+                return this.mapRestaurantResponse(item)
+            });
+    }
+
 
 }
