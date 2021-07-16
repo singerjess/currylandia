@@ -12,14 +12,15 @@ class RestaurantMapperTest {
     private RestaurantMapper restaurantMapper;
     private RestaurantDTO restaurantDTO;
     private Restaurant restaurant;
-    private String address = "loyola 123";
-    private String description = "comida vegana";
-    private String name = "lo de ivan";
+    private final Long id = 1L;
+    private final String address = "loyola 123";
+    private final String description = "comida vegana";
+    private final String name = "lo de ivan";
 
     @BeforeEach
     public void setUp() {
-        restaurantDTO = new RestaurantDTO(name, description, address);
-        restaurant = new Restaurant(name, description, address);
+        restaurantDTO = new RestaurantDTO(id, name, description, address);
+        restaurant = new Restaurant(id, name, description, address);
         restaurantMapper = new RestaurantMapper();
     }
 

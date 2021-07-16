@@ -5,6 +5,7 @@ import {Route, Switch} from "react-router-dom";
 import RestaurantDetail from "./restaurant/catalog/RestaurantDetail";
 import RestaurantsCatalog from "./restaurant/catalog/RestaurantsCatalog";
 import CreateRestaurantForm from "./restaurant/CreateRestaurantForm";
+import Profile from "./profile/Profile";
 
 export function App() {
   return (
@@ -13,7 +14,7 @@ export function App() {
       <Breadcrumbs />
       <main>
         <Switch>
-          <Route path="/restaurantes/:restaurantName">
+          <Route path="/restaurantes/:restaurantId">
             <RestaurantDetail />
           </Route>
             <Route path="/restaurantes">
@@ -21,6 +22,9 @@ export function App() {
             </Route>
             <Route path="/crear">
                 <CreateRestaurantForm />
+            </Route>
+            <Route path="/perfil">
+                <Profile />
             </Route>
           <Route path="/">
             <RestaurantsCatalog />

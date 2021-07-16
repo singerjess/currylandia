@@ -27,7 +27,7 @@ function CreateRestaurantForm() {
 
     return <section className="is-primary">
         <div className="container my-5 mt-5 mx-5 px-5 is-center" style={{"maxWidth": "760px"}}>
-            <h2 className="title is-1 is-capitalized">Creá tu Restaurante</h2>
+            <h2 className="title is-1 is-capitalized is-strong-color">Creá tu Restaurante</h2>
             <Formik
                 initialValues={{
                     name: '',
@@ -55,11 +55,11 @@ function CreateRestaurantForm() {
                       errors, touched, handleSubmit, handleChange, values, getFieldProps, setFieldValue, isSubmitting
                   }) => (
                     <Container>
-                        <Heading size="4" className="mb-3">Completá los siguientes campos</Heading>
+                        <Heading size="4" className="mb-3 is-strong-color">Completá los siguientes campos</Heading>
 
                         <form onSubmit={handleSubmit}>
                             <Form.Field>
-                                <Form.Label>Nombre</Form.Label>
+                                <Form.Label className="is-strong-darker-color" >Nombre</Form.Label>
                                 <Form.Control>
                                     <Form.Input size="medium" value={values.name} name="name" id="name" onChange={handleChange}
                                                 placeholder="Nombre de tu restaurante"/>
@@ -67,7 +67,7 @@ function CreateRestaurantForm() {
                                 <p className="help is-danger">{touched.name && errors.name}</p>
                             </Form.Field>
                             <Form.Field>
-                                <Form.Label>Descripción</Form.Label>
+                                <Form.Label className="is-strong-darker-color" >Descripción</Form.Label>
                                 <Form.Control>
                                     <Form.Textarea size="medium" name="description" value={values.description} id="description"
                                                    onChange={handleChange}
@@ -89,7 +89,7 @@ function CreateRestaurantForm() {
                             {/*</Form.Field>*/}
                             {/*)}*/}
                             <Form.Field>
-                                <Form.Label>Ubicacion</Form.Label>
+                                <Form.Label className="is-strong-darker-color" >Ubicacion</Form.Label>
                                 <Form.Control>
                                     <Form.Input name="address" id="address" value={values.address}
                                                 placeholder="pone una direccion y no te hagas el chistoso, betu"
@@ -100,7 +100,7 @@ function CreateRestaurantForm() {
                             </Form.Field>
 
                             <Block justifyContent="flex-end" display="flex">
-                                <Button color="primary" size="medium" disabled={isSubmitting} submit>Crear</Button>
+                                <Button color="primary" className="is-strong-darker-background-color" size="medium" disabled={isSubmitting} submit>Crear</Button>
                             </Block>
                         </form>
                     </Container>

@@ -25,4 +25,9 @@ public class RestaurantService {
     public Restaurant save(Restaurant restaurant) {
         return restaurantRepository.save(restaurant);
     }
+
+    @Transactional(readOnly = true)
+    public Restaurant getById(Long id) {
+        return restaurantRepository.getById(id);
+    }
 }

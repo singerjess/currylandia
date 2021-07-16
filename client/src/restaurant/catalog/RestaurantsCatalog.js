@@ -5,7 +5,7 @@ import {Container, Section} from "react-bulma-components"
 function RestaurantsCatalog() {
     return <Section>
         <Container>
-            <h1 className="has-text-left has-text-primary-dark">
+            <h1 className="has-text-centered has-text-weight-semibold is-strong-color is-size-3">
                 Restaurantes
             </h1>
             <Restaurants/>

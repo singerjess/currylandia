@@ -14,3 +14,16 @@ code {
     monospace;
 }
 
+h1.has-text-centered.has-text-weight-semibold.is-size-3::after {
+  content: "";
+  display: flex;
+  width: 90%;
+  height: 2px;
+  background: rgba(234, 157, 174, 1);
+  position: absolute;
+}
+
+.navbar.is-light .navbar-end .navbar-link.is-active, .navbar.is-light .navbar-end .navbar-link:focus, .navbar.is-light .navbar-end .navbar-link:hover, .navbar.is-light .navbar-end>a.navbar-item.is-active, .navbar.is-light .navbar-end>a.navbar-item:focus, .navbar.is-light .navbar-end>a.navbar-item:hover, .navbar.is-light .navbar-start .navbar-link.is-active, .navbar.is-light .navbar-start .navbar-link:focus, .navbar.is-light .navbar-start .navbar-link:hover, .navbar.is-light .navbar-start>a.navbar-item.is-active, .navbar.is-light .navbar-start>a.navbar-item:focus, .navbar.is-light .navbar-start>a.navbar-item:hover {
+  color: #777 !important;
+  background-color: rgb(238, 226, 220)!important;
+}

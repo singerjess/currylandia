@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class RestaurantMapper {
     public Restaurant mapToDomain(RestaurantDTO restaurantDTO) {
-        return new Restaurant(restaurantDTO.getName(), restaurantDTO.getDescription(), restaurantDTO.getAddress());
+        return new Restaurant(restaurantDTO.getId(), restaurantDTO.getName(), restaurantDTO.getDescription(), restaurantDTO.getAddress());
     }
 
     public RestaurantDTO mapToDTO(Restaurant restaurant) {
-        return new RestaurantDTO(restaurant.getName(), restaurant.getDescription(), restaurant.getAddress());
+        return new RestaurantDTO(restaurant.getId(), restaurant.getName(), restaurant.getDescription(), restaurant.getAddress());
     }
 }

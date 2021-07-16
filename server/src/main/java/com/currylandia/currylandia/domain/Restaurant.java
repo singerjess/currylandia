@@ -24,7 +24,8 @@ public class Restaurant {
     @Column
     private String address;
 
-    public Restaurant(String name, String description, String address) {
+    public Restaurant(Long id, String name, String description, String address) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.address = address;

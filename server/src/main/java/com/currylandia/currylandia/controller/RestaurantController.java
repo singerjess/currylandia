@@ -4,11 +4,9 @@ import com.currylandia.currylandia.controller.domain.RestaurantDTO;
 import com.currylandia.currylandia.domain.Restaurant;
 import com.currylandia.currylandia.mapper.RestaurantMapper;
 import com.currylandia.currylandia.service.RestaurantService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +24,11 @@ public class RestaurantController {
     @GetMapping("/restaurants")
     public List<RestaurantDTO> findAll() {
         return restaurantService.findAll().stream().map(restaurant -> restaurantMapper.mapToDTO(restaurant)).collect(Collectors.toList());
+    }
+
+    @GetMapping("/restaurants/{restaurantId}")
+    public RestaurantDTO getById(@PathVariable @NotBlank Long restaurantId) {
+        return restaurantMapper.mapToDTO(restaurantService.getById(restaurantId));
     }
 
 

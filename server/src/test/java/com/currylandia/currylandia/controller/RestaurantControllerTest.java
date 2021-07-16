@@ -19,12 +19,16 @@ class RestaurantControllerTest {
     private RestaurantDTO restaurantDTO;
     private RestaurantMapper restaurantMapper;
     private Restaurant restaurant;
+    private final Long id = 1L;
+    private final String name= "pepe";
+    private final String description= "comida portenia";
+    private final String address= "chacarita 1234";
 
     @BeforeEach
     public void setUp() {
         restaurantMapper = new RestaurantMapper();
-        restaurantDTO = new RestaurantDTO("pepe", "comida portenia", "chacarita 1234");
-        restaurant = new Restaurant("pepe", "comida portenia", "chacarita 1234");
+        restaurantDTO = new RestaurantDTO(id, name, description, address);
+        restaurant = new Restaurant(id, name, description, address);
         restaurantService = mock(RestaurantService.class);
         restaurantController = new RestaurantController(restaurantService, restaurantMapper);
 
@@ -45,5 +49,13 @@ class RestaurantControllerTest {
         restaurantController.add(restaurantDTO);
 
         verify(restaurantService).save(eq(restaurantMapper.mapToDomain(restaurantDTO)));
+    }
+
+    @Test
+    public void whenGettingARestaurantByIdThenAGetByIdShouldBeSentToTheService() {
+        when(restaurantService.getById(eq(restaurant.getId()))).thenReturn(restaurant);
+        restaurantController.getById(restaurantDTO.getId());
+
+        verify(restaurantService).getById(eq(restaurantDTO.getId()));
     }
 }

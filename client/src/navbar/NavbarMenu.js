@@ -8,7 +8,7 @@ export function NavbarMenu({isActive}) {
             <NavLink
                 className="navbar-item"
                 activeClassName="is-active"
-                to="/" >
+                to="/perfil" >
                 Mi Perfil
             </NavLink>
             <NavLink

@@ -1,4 +1,4 @@
-import currylandia from "../currylandia.jpeg";
+import currylandia from "../currylandia.png";
 import React from "react";
 
 export function Logo() {

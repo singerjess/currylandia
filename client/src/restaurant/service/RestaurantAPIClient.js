@@ -8,6 +8,7 @@ export class RestaurantApiClient {
     }
 
     mapRestaurantResponse(restaurant) {
+        restaurant["id"] = restaurant.id;
         restaurant["name"] = restaurant.name;
         restaurant["description"] = restaurant.description;
         restaurant["address"] = restaurant.address;
@@ -19,6 +20,14 @@ export class RestaurantApiClient {
             .then(response => response.data)
             .then(restaurantItems => {
                 return restaurantItems.map(this.mapRestaurantResponse)
+            });
+    }
+
+    async getById(id) {
+        return this.httpClient.get('/restaurants/'+id, {})
+            .then(response => response.data)
+            .then(restaurant => {
+                return this.mapRestaurantResponse(restaurant);
             });
     }
 
