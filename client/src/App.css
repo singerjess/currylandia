@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "proxima-nova";
+  src: url("./assets/fonts/ProximaNova-Regular.otf");
+}
+
 .App {
   text-align: center;
 }
@@ -41,6 +46,13 @@
 }
 .is-strong-darker-background-color {
   background-color: rgba(144, 61, 79, 1) !important;
+}
+
+.is-light-grey {
+  color: #555 !important;
+}
+.is-title {
+ font-family: 'proxima-nova', sans-serif !important;
 }
 
 @keyframes App-logo-spin {

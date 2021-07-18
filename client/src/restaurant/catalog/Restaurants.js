@@ -4,7 +4,7 @@ import {useHistory} from 'react-router-dom';
 import {Section} from 'react-bulma-components'
 import {RestaurantApiClient} from "../service/RestaurantAPIClient";
 
-function Restaurants() {
+function Restaurants(props) {
     const restaurantApiClient = new RestaurantApiClient("http://localhost:8080");
     const [isLoading, setIsLoading] = useState(true);
     const [getRestaurants, setRestaurants] = useState([]);
@@ -17,6 +17,7 @@ function Restaurants() {
     useEffect(() => {
         restaurantApiClient.getAll().then(response => {
             setRestaurants(response);
+            props.setParentRestaurants(response);
             setIsLoading(false);
         }).catch((error) => {
             setIsLoading(true);
