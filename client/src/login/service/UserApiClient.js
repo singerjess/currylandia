@@ -12,7 +12,7 @@ export class UserApiClient {
     }
     async login(userData) {
         return this.httpClient.post('/login', {
-            "user": userData.username,
+            "mail": userData.mail,
             "password": userData.password //TODO: encrypt
         })
             .then(response => response.data)

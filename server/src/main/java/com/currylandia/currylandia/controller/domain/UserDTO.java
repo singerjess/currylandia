@@ -4,14 +4,14 @@ import javax.validation.constraints.NotBlank;
 
 public class UserDTO {
     private Long id;
-    @NotBlank(message = "Name is mandatory")
-    private final String username;
+    @NotBlank(message = "Mail is mandatory")
+    private final String mail;
 
-    @NotBlank(message = "Description is mandatory")
+    @NotBlank(message = "Password is mandatory")
     private final String password;
-    public UserDTO(Long id, String username, String password) {
+    public UserDTO(Long id, String mail, String password) {
         this.id = id;
-        this.username = username;
+        this.mail = mail;
         this.password = password;
     }
 
@@ -19,7 +19,7 @@ public class UserDTO {
         return password;
     }
 
-    public String getUsername() {
-        return username;
+    public String getMail() {
+        return mail;
     }
 }
