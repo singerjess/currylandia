@@ -7,22 +7,19 @@
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
 
-    <changeSet author="jessi" id="create_schedules_table">
-        <createTable tableName="schedules">
+    <changeSet author="jessi" id="create_users_table">
+        <createTable tableName="users">
             <column name="id" type="serial">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="hour_open" type="TIME">
+            <column name="mail" type="VARCHAR(30)">
                 <constraints nullable="false"/>
             </column>
-            <column name="hour_close" type="TIME">
+            <column name="username" type="VARCHAR(20)">
                 <constraints nullable="false"/>
             </column>
-            <column name="restaurant_id" type="serial">
+            <column name="password" type="VARCHAR(100)">
                 <constraints nullable="false"/>
-            </column>
-            <column name="day_of_week" type="SMALLINT">
-                <constraints nullable="false" checkConstraint="CHECK (day_of_week &gt;= 1 &lt; 7)"/>
             </column>
         </createTable>
     </changeSet>
@@ -32,10 +29,10 @@
             <column name="id" type="serial">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="name" type="VARCHAR2(20)">
+            <column name="name" type="VARCHAR(20)">
                 <constraints nullable="false"/>
             </column>
-            <column name="description" type="VARCHAR2(255)">
+            <column name="description" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
             <column name="address" type="VARCHAR(255)">
@@ -45,29 +42,25 @@
     </changeSet>
 
 
-
-    <changeSet id="add_foreign_key_constraint_schedule_restaurant" author="jessiii">
-        <addForeignKeyConstraint baseColumnNames="restaurant_id"
-                                 baseTableName="schedules"
-                                 constraintName="fk_schedule_restaurant"
-                                 onDelete="CASCADE"
-                                 onUpdate="RESTRICT"
-                                 referencedColumnNames="id"
-                                 referencedTableName="restaurants"/>
-    </changeSet>
-
     <changeSet id="restaurant_unique_constraint" author="jess">
         <addUniqueConstraint
-                columnNames="id,address"
+                columnNames="name,address"
                 constraintName="unique_restaurant"
                 tableName="restaurants"/>
     </changeSet>
 
-    <changeSet id="schedule_unique_constraint" author="jess">
+    <changeSet id="users_unique_username_constraint" author="jess">
         <addUniqueConstraint
-                columnNames="restaurant_id,hour_close,hour_open,day_of_week"
-                constraintName="unique_schedule"
-                tableName="schedules"/>
+                columnNames="username"
+                constraintName="unique_username"
+                tableName="users"/>
+    </changeSet>
+
+    <changeSet id="users_unique_mail_constraint" author="jess">
+        <addUniqueConstraint
+                columnNames="mail"
+                constraintName="unique_mail"
+                tableName="users"/>
     </changeSet>
 
 </databaseChangeLog>
