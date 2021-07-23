@@ -4,6 +4,7 @@ import javax.validation.constraints.NotBlank;
 
 public class UserDTO {
     private Long id;
+
     @NotBlank(message = "Mail is mandatory")
     private final String mail;
 

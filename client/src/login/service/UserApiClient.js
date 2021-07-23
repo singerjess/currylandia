@@ -4,7 +4,8 @@ import axios from 'axios';
 export class UserApiClient {
     constructor(baseUrl) {
         this.httpClient = axios.create({
-            baseURL: baseUrl
+            baseURL: baseUrl,
+            withCredentials: true
         });
     }
     handleLoginError(error) {
@@ -13,7 +14,7 @@ export class UserApiClient {
     async login(userData) {
         return this.httpClient.post('/login', {
             "mail": userData.mail,
-            "password": userData.password //TODO: encrypt
+            "password": userData.password//TODO: encrypt
         })
             .then(response => response.data)
             .then({

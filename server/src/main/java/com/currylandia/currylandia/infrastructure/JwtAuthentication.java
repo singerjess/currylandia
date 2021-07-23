@@ -7,21 +7,11 @@ public class JwtAuthentication extends AbstractAuthenticationToken {
 
 
     private final String credentials;
-    private final User user;
 
     public JwtAuthentication(String credentials) {
         super(null);
         this.credentials = credentials;
-        this.user = null;
     }
-
-    public JwtAuthentication(User user) {
-        super(null);
-        this.credentials = null;
-        this.user = user;
-        setAuthenticated(true);
-    }
-
 
     @Override
     public String getCredentials() {
@@ -30,6 +20,6 @@ public class JwtAuthentication extends AbstractAuthenticationToken {
 
     @Override
     public User getPrincipal() {
-        return null;
+        return new User("sample", "sample", "samples");
     }
 }

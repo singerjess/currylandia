@@ -3,7 +3,8 @@ import axios from 'axios';
 export class RestaurantApiClient {
     constructor(baseUrl) {
         this.httpClient = axios.create({
-            baseURL: baseUrl
+            baseURL: baseUrl,
+            withCredentials: true
         });
     }
 
@@ -16,7 +17,8 @@ export class RestaurantApiClient {
     }
 
     async getAll() {
-        return this.httpClient.get('/restaurants', {})
+        return this.httpClient.get('/restaurants', {
+        })
             .then(response => response.data)
             .then(restaurantItems => {
                 return restaurantItems.map(this.mapRestaurantResponse)
@@ -24,7 +26,8 @@ export class RestaurantApiClient {
     }
 
     async getById(id) {
-        return this.httpClient.get('/restaurants/'+id, {})
+        return this.httpClient.get('/restaurants/'+id, {
+        })
             .then(response => response.data)
             .then(restaurant => {
                 return this.mapRestaurantResponse(restaurant);

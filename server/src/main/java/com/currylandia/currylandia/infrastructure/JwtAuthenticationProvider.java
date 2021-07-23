@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtAuthenticationProvider implements AuthenticationProvider {
 
-    private JWTMapper jwtMapper;
+    private final JWTMapper jwtMapper;
 
     JwtAuthenticationProvider(JWTMapper jwtMapper) {
         this.jwtMapper = jwtMapper;
@@ -29,7 +29,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
             throw new BadCredentialsException(e.getMessage(), e);
         }
 
-        return new JwtAuthentication(claims.getSubject()); //TODO: quizas deberi buscar el usuario
+        return new JwtAuthentication(accessToken); //TODO: quizas deberi buscar el usuario
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.currylandia.currylandia.controller;
 
 import com.currylandia.currylandia.controller.domain.UserAuthenticationDTO;
 import com.currylandia.currylandia.controller.domain.UserDTO;
+import com.currylandia.currylandia.mapper.UserMapper;
 import com.currylandia.currylandia.service.SessionsService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -12,22 +13,25 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.time.Duration;
+import java.util.stream.Stream;
 
 @RestController
 public class SessionController {
 
 
     public static final String CURRYLANDIA_ACCESS_TOKEN_COOKIE = "currylandia.access_token";
-    private SessionsService sessionsService;
+    private final SessionsService sessionsService;
+    private final UserMapper userMapper;
 
-    public SessionController(SessionsService sessionsService) {
+    public SessionController(SessionsService sessionsService, UserMapper userMapper) {
         this.sessionsService = sessionsService;
+        this.userMapper = userMapper;
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserAuthenticationDTO> login(@Valid @RequestBody UserDTO userDTO) {
-        String accessToken = sessionsService.authenticate(userDTO.getMail(), userDTO.getPassword());
-        UserAuthenticationDTO userAuthenticationDTO = new UserAuthenticationDTO(userDTO, accessToken);
+    public ResponseEntity<UserAuthenticationDTO> login(@Valid @RequestBody UserDTO user) {
+        String accessToken = sessionsService.authenticate(user.getMail(), user.getPassword());
+        UserAuthenticationDTO userAuthenticationDTO = new UserAuthenticationDTO(user, accessToken);
 
         String authCookie = ResponseCookie.from(CURRYLANDIA_ACCESS_TOKEN_COOKIE, accessToken)
                 .httpOnly(true)
@@ -40,7 +44,11 @@ public class SessionController {
     }
 
     @PostMapping("/register")
-    public UserDTO register(@RequestBody UserDTO userDTO) {
-        return userDTO;
+    public UserDTO register(@Valid @RequestBody UserDTO newUser) {
+        return Stream.of(newUser)
+                .map(userMapper::mapToDomain)
+                .map(sessionsService::createUser)
+                .map(userMapper::mapFromDomain)
+                .findFirst().get();
     }
 }

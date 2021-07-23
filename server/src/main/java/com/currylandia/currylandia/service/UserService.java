@@ -25,4 +25,13 @@ public class UserService {
     public Optional<User> findByMail(String mail) {
         return userRepository.findByMail(mail);
     }
+
+    @Transactional(readOnly = true)
+    public boolean existsByMail(String mail) {
+        return findByMail(mail).isPresent();
+    }
+
+    public User save(User newUser) {
+        return userRepository.save(newUser);
+    }
 }
