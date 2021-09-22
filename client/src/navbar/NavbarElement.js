@@ -4,15 +4,15 @@ import {NavbarBurger} from "./NavbarBurger";
 import {NavbarMenu} from "./NavbarMenu";
 import {Navbar} from "react-bulma-components"
 
-function NavbarElement(){
+function NavbarElement({handleLogout, user}){
     const [isActive, setisActive] = React.useState(false);
-    return <Navbar className="has-shadow is-light is-size-5 is-family-primary" style={{"backgroundColor" : "#eee2dc"}}>
+    return <Navbar className="has-shadow is-strong-background-color is-size-5 is-family-primary">
         <Navbar.Brand>
             <Logo/>
-            <h1 className="navbar-item is-title  is-light-grey is-size-4 has-text-weight-semibold">lechuga y tomate</h1>
+            <h1 className="navbar-item is-title  is-light-grey is-size-4 has-text-weight-semibold">Currylandia</h1>
             <NavbarBurger onClick={() => setisActive(!isActive)} />
         </Navbar.Brand>
-        <NavbarMenu isActive={isActive}/>
+        <NavbarMenu handleLogout={handleLogout} user={user} isActive={isActive}/>
     </Navbar>;
 }
 export default NavbarElement;

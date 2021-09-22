@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserMapper {
     public User mapToDomain(UserDTO userDTO) {
-        return new User(userDTO.getMail(), userDTO.getMail(), userDTO.getPassword()); //TODO: change username
+        return new User(userDTO.getUsername(), userDTO.getPassword(), userDTO.getMail()); //TODO: change username
     }
 
     public UserDTO mapFromDomain(User user) {
-        return new UserDTO(user.id(), user.mail(), user.password());
+        return new UserDTO(user.id(), user.mail(), user.username(), user.password());
     }
 }

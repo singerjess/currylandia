@@ -8,16 +8,27 @@ export class UserApiClient {
             withCredentials: true
         });
     }
-    handleLoginError(error) {
 
+    mapUser(userData) {
+        let user = {"username": "", "logged": true};
+        user.username = userData["userDTO"]["username"];
+        return user;
     }
+
     async login(userData) {
-        return this.httpClient.post('/login', {
+        return this.httpClient.post('/session', {
             "mail": userData.mail,
             "password": userData.password//TODO: encrypt
         })
             .then(response => response.data)
-            .then({
-            });
+            .then(userData => {return this.mapUser(userData)});
+    }
+    async register(userData) {
+        return this.httpClient.post('/user', {
+            "mail": userData.mail,
+            "username": userData.username,
+            "password": userData.password//TODO: encrypt
+        })
+            .then(response => response.data);
     }
 }

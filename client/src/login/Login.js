@@ -1,26 +1,22 @@
 import React from "react";
 import {Block, Button, Container, Form, Heading} from 'react-bulma-components';
+import { Link } from 'react-router-dom';
 import {Formik} from 'formik';
 import {UserApiClient} from "./service/UserApiClient";
 
-function Login() {
+function Login({handleLogin, handleLoginError}) {
 
     const userApiClient = new UserApiClient("http://localhost:8080");
 
-    const daysOfWeek = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
     const validateForm = values => {
         const errors = {};
 
-        if (values.name === "") {
-            errors.name = 'Required';
+        if (values.mail === "") {
+            errors.mail = 'Required';
         }
 
-        if (values.address === '') {
-            errors.address = 'Required';
-        }
-
-        if (values.description === '') {
-            errors.description = 'Required';
+        if (values.password === '') {
+            errors.password = 'Required';
         }
         return errors;
     };
@@ -36,12 +32,15 @@ function Login() {
                 validate={validateForm}
                 onSubmit={
                     (values, actions) => {
-                        userApiClient.login(values)
-                            .catch(error => {
-                                actions.setSubmitting(false);
-                                actions.setFieldError("password", "Usuario o contraseña incorrectos");
-                                console.log(error);
-                            });
+                        try {
+                            userApiClient.login(values).then(response =>
+                            {handleLogin(response)})
+                        } catch(error) {
+                            actions.setSubmitting(false);
+                            actions.setFieldError("password", "Usuario o contraseña incorrectos");
+                            handleLoginError(error);
+                            console.log(error);
+                        };
                     }}>
                 {({
                       errors, touched, handleSubmit, handleChange, values, getFieldProps, setFieldValue, isSubmitting
@@ -53,7 +52,7 @@ function Login() {
                             <Form.Field>
                                 <Form.Label className="is-strong-darker-color">Mail</Form.Label>
                                 <Form.Control className="has-icons-left">
-                                    <Form.Input size="medium" value={values.mail} name="mail" id="mail"
+                                    <Form.Input type="mail" size="medium" value={values.mail} name="mail" id="mail"
                                                 onChange={handleChange}
                                                 placeholder="e.g. pepe@gmail.com"/>
                                     <span className="icon is-small is-left">
@@ -76,13 +75,17 @@ function Login() {
                                 <p className="help is-danger">{touched.password && errors.password}</p>
                             </Form.Field>
                             <Block justifyContent="flex-end" display="flex">
-                                <Button color="primary" className="is-strong-darker-background-color" size="medium"
-                                        disabled={isSubmitting} submit>Entrar</Button>
+                                <Button.Group>
+                                    <Button fullwidth color="primary" className="is-strong-darker-background-color" size="medium"
+                                            disabled={isSubmitting} submit>Entrar</Button>
+                                    <Button fullwidth className="is-strong-background-color" to="/register" renderAs={Link}>Registrarse</Button>
+                                </Button.Group>
                             </Block>
                         </form>
                     </Container>
                 )}
             </Formik>
+
         </div>
     </section>
 }

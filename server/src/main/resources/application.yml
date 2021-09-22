@@ -13,6 +13,10 @@ spring:
     password: password
     username: postgres
 security:
+  cors:
+    allowlist:
+      - "http://localhost:3000"
+      #- "*"
   session:
     secretKey: "ivan es un boludo y no me lo banco mas el 21/07/2021 fue el ultimo dia"
 

@@ -2,6 +2,7 @@ package com.currylandia.currylandia.service;
 
 import com.currylandia.currylandia.domain.User;
 import com.currylandia.currylandia.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,9 +12,11 @@ import java.util.Optional;
 public class UserService {
 
     private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional(readOnly = true)
@@ -33,5 +36,14 @@ public class UserService {
 
     public User save(User newUser) {
         return userRepository.save(newUser);
+    }
+
+    @Transactional
+    public User createUser(User newUser) {
+        if (existsByMail(newUser.mail())) {
+            throw new RuntimeException("Username already exists");
+        }
+        User userWithEncodedPassword = new User(newUser.username(), passwordEncoder.encode(newUser.password()), newUser.mail());
+        return save(userWithEncodedPassword);
     }
 }

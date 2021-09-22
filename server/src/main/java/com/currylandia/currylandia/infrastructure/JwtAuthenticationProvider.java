@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 public class JwtAuthenticationProvider implements AuthenticationProvider {
 
     private final JWTMapper jwtMapper;
-
     JwtAuthenticationProvider(JWTMapper jwtMapper) {
         this.jwtMapper = jwtMapper;
     }

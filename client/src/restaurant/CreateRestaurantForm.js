@@ -7,7 +7,6 @@ function CreateRestaurantForm() {
 
     const restaurantReviewApiClient = new RestaurantApiClient("http://localhost:8080");
 
-    const daysOfWeek = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
     const validateForm = values => {
         const errors = {};
 
@@ -38,18 +37,12 @@ function CreateRestaurantForm() {
                 onSubmit={
                     (values, actions) => {
                         restaurantReviewApiClient.createRestaurant(values)
-                            .catch((error) => {
+                        .then(() => window.location.replace("/restaurantes"))
+                        .catch((error) => {
                                 actions.setSubmitting(false);
                                 console.log(error);
+                                window.location.replace("/login");
                             });
-                        actions.resetForm({
-                            values: {
-                                // the type of `values` inferred to be Blog
-                                name: '',
-                                description: '',
-                                address: '',
-                            }
-                        });
                     }}>
                 {({
                       errors, touched, handleSubmit, handleChange, values, getFieldProps, setFieldValue, isSubmitting
@@ -75,19 +68,6 @@ function CreateRestaurantForm() {
                                 </Form.Control>
                                 <p className="help is-danger">{touched.description && errors.description}</p>
                             </Form.Field>
-
-                            {/*<Form.Label>Horarios</Form.Label>*/}
-                            {/*{daysOfWeek.map((day, index) =>*/}
-                            {/*<Form.Field key={day} className="has-addons">*/}
-                            {/*    <Form.Label style={{minWidth: "150px"}}>*/}
-                            {/*        <Button style={{minWidth: "150px"}} className="is-static" size="medium">{day}</Button>*/}
-                            {/*    </Form.Label>*/}
-                            {/*    <Form.Control className="is-expanded">*/}
-                            {/*        <Form.Input name={`schedule_${index}`} placeholder={`Horario día ${day}`} id={`schedule_${index}`} size="medium" />*/}
-                            {/*    </Form.Control>*/}
-                            {/*    <p className="help is-danger">{touched.schedule && errors.schedule}</p>*/}
-                            {/*</Form.Field>*/}
-                            {/*)}*/}
                             <Form.Field>
                                 <Form.Label className="is-strong-darker-color" >Ubicacion</Form.Label>
                                 <Form.Control>

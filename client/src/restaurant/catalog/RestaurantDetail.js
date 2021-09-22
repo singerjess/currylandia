@@ -1,8 +1,8 @@
 import currylandia from "../../currylandia.png";
 import {useParams} from "react-router-dom";
-import {Columns, Container, Section, Content, omponent, Element} from 'react-bulma-components';
+import {Columns, Container, Section} from 'react-bulma-components';
 import {useEffect, useState} from "react";
-import { RestaurantApiClient } from "../service/RestaurantAPIClient";
+import {RestaurantApiClient} from "../service/RestaurantAPIClient";
 
 function RestaurantDetail() {
     let { restaurantId } = useParams();

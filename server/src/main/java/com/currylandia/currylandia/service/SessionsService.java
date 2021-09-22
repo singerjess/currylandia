@@ -33,12 +33,4 @@ public class SessionsService {
         return jwtMapper.createAccessToken(user);
     }
 
-    @Transactional
-    public User createUser(User newUser) {
-        if (userService.existsByMail(newUser.mail())) {
-            throw new RuntimeException("Username already exists");
-        }
-
-        return userService.save(newUser);
-    }
 }

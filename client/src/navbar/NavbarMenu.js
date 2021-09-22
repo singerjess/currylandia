@@ -1,16 +1,10 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
-import { Navbar } from "react-bulma-components";
+import {NavLink} from "react-router-dom";
+import {Navbar} from "react-bulma-components";
 
-export function NavbarMenu({isActive}) {
+export function NavbarMenu({isActive, handleLogout, user}) {
     return <Navbar.Menu className={"navbar-menu " + (isActive ? "is-active" : "")} id="nav-links">
         <div className="navbar-end">
-            <NavLink
-                className="navbar-item"
-                activeClassName="is-active"
-                to="/perfil" >
-                Mi Perfil
-            </NavLink>
             <NavLink
                 className="navbar-item"
                 activeClassName="is-active"
@@ -26,9 +20,25 @@ export function NavbarMenu({isActive}) {
             <NavLink
                 className="navbar-item"
                 activeClassName="is-active"
-                to="/login" >
-                Entrá o registrate
+                to="/perfil" >
+                Mi Perfil
             </NavLink>
+            {user.logged ?
+                <NavLink
+                    className="navbar-item"
+                    activeClassName="is-active"
+                    onClick={handleLogout}
+                    to="/restaurantes">
+                    Cerrar sesión
+                </NavLink>
+                :
+                <NavLink
+                    className="navbar-item"
+                    activeClassName="is-active"
+                    to="/login">
+                    Entrá o registrate
+                </NavLink>
+            }
         </div>
     </Navbar.Menu>;
 }

@@ -1,5 +1,6 @@
 package com.currylandia.currylandia.infrastructure;
 
+import com.currylandia.currylandia.configuration.security.CORSConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,18 +24,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JwtAuthenticationProvider jwtAuthenticationProvider;
+    @Autowired
+    private CORSConfiguration CORSSettings;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        String allowedEndpoints = "(/login || /register)";
+        String allowedEndpoints = "(/session || /user)";
 
         http.csrf().disable()
                 .cors().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                 .antMatchers("/restaurants/**").permitAll()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/register").permitAll()
+                .antMatchers("/user").permitAll()
+                .antMatchers("/session").permitAll()
                 .anyRequest().authenticated().and()
                 .addFilterBefore(new JwtAuthenticationFilter(authenticationManager(), allowedEndpoints), UsernamePasswordAuthenticationFilter.class);
     }
@@ -49,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000"));
+        corsConfiguration.setAllowedOrigins(CORSSettings.getAllowList());
         corsConfiguration.setAllowCredentials(true);
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addAllowedMethod("*");

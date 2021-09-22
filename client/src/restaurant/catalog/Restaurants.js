@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {RestaurantCatalogItem} from "./RestaurantCatalogItem";
 import {useHistory} from 'react-router-dom';
-import {Section} from 'react-bulma-components'
+import {Section, Columns} from 'react-bulma-components'
 import {RestaurantApiClient} from "../service/RestaurantAPIClient";
 
 function Restaurants(props) {
@@ -26,8 +26,10 @@ function Restaurants(props) {
     }, [])
 
     return <Section className="is-multiline is-mobile has-text-centered-mobile" display="wrap" style={{"flexWrap": "wrap"}}>
+        <Columns className="">
         {getRestaurants.map(restaurant => <RestaurantCatalogItem onClick={() => handleOnClick(restaurant)} key={restaurant.name} restaurant={restaurant}/>)}
-    </Section>;
+        </Columns>
+        </Section>;
 }
 
 export default Restaurants;

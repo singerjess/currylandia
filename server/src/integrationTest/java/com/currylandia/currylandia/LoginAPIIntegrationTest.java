@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.contains;
 
 public class LoginAPIIntegrationTest extends IntegrationTest {
@@ -18,16 +17,16 @@ public class LoginAPIIntegrationTest extends IntegrationTest {
 
     @Test
     public void givenARegisteredUserWhenLoggingInThenTheUserTokenShouldBeRetrievend(){
-        given().body(new UserDTO(null, "pepe", "jose")).
+        given().body(new UserDTO(null, "pepe", "username", "jose")).
                 contentType(ContentType.JSON).
                 when().
-                post("/register").
+                post("/user").
                 then()
                 .statusCode(200);
-        given().body(new UserDTO(null, "pepe", "jose")).
+        given().body(new UserDTO(null, "pepe", "username", "jose")).
                 contentType(ContentType.JSON).
                 when().
-                post("/login").
+                post("/session").
                 then()
                 .statusCode(200);
     }
